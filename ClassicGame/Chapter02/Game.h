@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include "Math.h"
 
 class Game
 {
@@ -27,13 +28,15 @@ public:
 	void RemoveSprite(class SpriteComponent* sprite);
 	
 	SDL_Texture* GetTexture(const std::string& fileName);
+	Vector2 resolution;
+	std::vector<std::vector<int>*> grid;
 private:
 	void ProcessInput();
 	void UpdateGame();
 	void GenerateOutput();
 	void LoadData();
 	void UnloadData();
-	
+	void generateGrid(int x_ammount, int y_ammount);
 	// Map of textures loaded
 	std::unordered_map<std::string, SDL_Texture*> mTextures;
 

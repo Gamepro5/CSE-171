@@ -21,7 +21,8 @@ Game::Game()
 ,mIsRunning(true)
 ,mUpdatingActors(false)
 {
-	
+	resolution.x = 680;
+	resolution.y = 680;
 }
 
 bool Game::Initialize()
@@ -32,7 +33,7 @@ bool Game::Initialize()
 		return false;
 	}
 	
-	mWindow = SDL_CreateWindow("Snek", 100, 100, 1024, 768, 0);
+	mWindow = SDL_CreateWindow("Snek ~ danger space noodle", 100, 100, int(resolution.x), int(resolution.y), 0);
 	if (!mWindow)
 	{
 		SDL_Log("Failed to create window: %s", SDL_GetError());
@@ -137,15 +138,39 @@ void Game::UpdateGame()
 	}
 }
 
+void Game::generateGrid(int x_ammount, int y_ammount) {
+	for (int i = 0; i < x_ammount; i++) {
+		for (int j = 0; j < y_ammount; j++) {
+			if (i % 2 == j % 2) {
+				SDL_SetRenderDrawColor(mRenderer, 127, 127, 127, 30);
+			}
+			else {
+				SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 30);
+			}
+			SDL_Rect wall{
+				((resolution.x) * i) / (x_ammount), // top left x
+				((resolution.y) * j) / (y_ammount), // top left y
+				(resolution.x) / (x_ammount), // width
+				(resolution.y) / (y_ammount) // height
+			};
+			SDL_RenderFillRect(mRenderer, &wall);
+		}
+	}
+}
+
 void Game::GenerateOutput()
 {
 	SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 255);
 	SDL_RenderClear(mRenderer);
 	
+	
 	// Draw all sprite components
-	for (auto sprite : mSprites)
+	//draw background
+	mSprites[0]->Draw(mRenderer);
+	generateGrid(17, 17);
+	for (int i=1;i<mSprites.size();i++)
 	{
-		sprite->Draw(mRenderer);
+		mSprites[i]->Draw(mRenderer);
 	}
 
 	SDL_RenderPresent(mRenderer);
@@ -153,17 +178,26 @@ void Game::GenerateOutput()
 
 void Game::LoadData()
 {
+	//Create the grid
+
+	for (int i = 0; i < 17; i++) {
+		grid.push_back(new std::vector<int>);
+	}
+	for (int i = 0; i < 17; i++) {
+		grid[i]->push_back(0); //0 means unnocupied, 1 means snake, 2 means apple, and 3 means rocket.
+	}
+
 	// Create player's snek
 	mSnake = new Snake(this);
 	mSnake->SetPosition(Vector2(100.0f, 384.0f));
-	mSnake->SetScale(1.5f);
+	mSnake->SetScale(1.0f);
 
 	// Create actor for the background (this doesn't need a subclass)
 	Actor* temp = new Actor(this);
 	temp->SetPosition(Vector2(512.0f, 384.0f));
 	// Create the "far back" background
 	BGSpriteComponent* bg = new BGSpriteComponent(temp);
-	bg->SetScreenSize(Vector2(1024.0f, 768.0f));
+	bg->SetScreenSize(resolution);
 	std::vector<SDL_Texture*> bgtexs = {
 		GetTexture("Assets/Farback01.png"),
 		GetTexture("Assets/Farback02.png")
