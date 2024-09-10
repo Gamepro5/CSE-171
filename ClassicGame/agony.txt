@@ -1,0 +1,1 @@
+when i try to change the path of this project and the folder names, vs code breaks in spectacular ways. words cannot express how much i hate this.
