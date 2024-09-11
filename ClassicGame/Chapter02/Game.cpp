@@ -13,6 +13,7 @@
 #include "SpriteComponent.h"
 #include "Ship.h"
 #include "Snake.h"
+#include <vector>
 #include "BGSpriteComponent.h"
 
 Game::Game()
@@ -178,18 +179,11 @@ void Game::GenerateOutput()
 
 void Game::LoadData()
 {
-	//Create the grid
 
-	for (int i = 0; i < 17; i++) {
-		grid.push_back(new std::vector<int>);
-	}
-	for (int i = 0; i < 17; i++) {
-		grid[i]->push_back(0); //0 means unnocupied, 1 means snake, 2 means apple, and 3 means rocket.
-	}
 
 	// Create player's snek
 	mSnake = new Snake(this);
-	mSnake->SetPosition(Vector2(100.0f, 384.0f));
+	mSnake->setTilePos(5, 5);
 	mSnake->SetScale(1.0f);
 
 	// Create actor for the background (this doesn't need a subclass)

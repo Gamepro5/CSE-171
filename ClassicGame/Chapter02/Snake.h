@@ -1,11 +1,20 @@
 
 #pragma once
 #include "Actor.h"
+#include "SnakeSegment.h"
+#include <vector>
 class Snake : public Actor
 {
 public:
 	Snake(class Game* game);
+	Game* game;
+	Snake* self;
 	void UpdateActor(float deltaTime) override;
 	void ProcessKeyboard(const uint8_t* state);
 	Vector2 direction;
+	int xTilePos;
+	int yTilePos;
+	void setTilePos(int x, int y);
+	void moveSnake(bool grow);
+	std::vector<class SnakeSegment*> segments;
 };

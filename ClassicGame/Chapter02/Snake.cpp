@@ -6,12 +6,40 @@
 Snake::Snake(Game* game)
 	:Actor(game)
 	, direction(Vector2(0,0))
-{
+{	
+	self = this;
+	this->game = game;
 	// Create an animated sprite component
 	SpriteComponent* sprite = new SpriteComponent(this);
 	sprite->SetTexture(game->GetTexture("Graphics/head_up.png"));
 
 }
+
+void Snake::setTilePos(int x, int y) {
+	xTilePos = x;
+	yTilePos = y;
+	game->grid[x][y] = 1;
+
+	float top_left_x = ((game->resolution.x) * x) / (17); // top left x
+	float bottom_left_x = ((game->resolution.x) * x+1) / (17); // bottom left x;
+	float top_left_y = ((game->resolution.y) * y) / (17); // top left y
+	float bottom_left_y = ((game->resolution.y) * y+1) / (17); // bottom left y
+	SetPosition(Vector2(top_left_x+(bottom_left_x - top_left_x / 2), top_left_y + (bottom_left_y - top_left_y / 2)));
+}
+
+void Snake::moveSnake(bool grow) {
+	
+	return;
+	if (grow) {
+		//SnakeSegment* segment = new SnakeSegment(game, self, nullptr);
+		//segment->setTilePos();
+		//segment->SetScale(1.0f);
+	}
+	else {
+
+	}
+}
+
 
 void Snake::UpdateActor(float deltaTime)
 {

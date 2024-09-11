@@ -29,7 +29,7 @@ public:
 	
 	SDL_Texture* GetTexture(const std::string& fileName);
 	Vector2 resolution;
-	std::vector<std::vector<int>*> grid;
+	int grid[17][17];
 private:
 	void ProcessInput();
 	void UpdateGame();

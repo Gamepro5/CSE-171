@@ -1,13 +1,21 @@
-﻿  Game.cpp
-C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(151,26): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(151,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+﻿  Actor.cpp
+  Game.cpp
 C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(152,26): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
 C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(152,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(153,20): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
-C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(153,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(153,26): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(153,26): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
 C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(154,20): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
 C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(154,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(171,16): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(155,20): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(155,20): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Game.cpp(172,16): warning C4018: '<': signed/unsigned mismatch
+  Main.cpp
+  Ship.cpp
+C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Ship.cpp(31,28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Snake.cpp
+  SnakeSegment.cpp
+  SpriteComponent.cpp
+  Generating Code...
   Game.vcxproj -> C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Debug\Game.exe
   C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\\..\external\SDL\lib\win\x86\libfreetype-6.dll
   C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\\..\external\SDL\lib\win\x86\libogg-0.dll
