@@ -83,12 +83,14 @@ void Game::ProcessInput()
 				break;
 		}
 	}
+
 	
 	const Uint8* state = SDL_GetKeyboardState(NULL);
 	if (state[SDL_SCANCODE_ESCAPE])
 	{
 		mIsRunning = false;
 	}
+	mSnake->ProcessKeyboard(state);
 
 	
 }
@@ -183,7 +185,7 @@ void Game::LoadData()
 
 	// Create player's snek
 	mSnake = new Snake(this);
-	mSnake->setTilePos(5, 5);
+	mSnake->setTilePos(0, 0);
 	mSnake->SetScale(1.0f);
 
 	// Create actor for the background (this doesn't need a subclass)

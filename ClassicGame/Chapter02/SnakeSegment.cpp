@@ -10,7 +10,7 @@ SnakeSegment::SnakeSegment(Game* game, Snake* head, SnakeSegment* parent)
 	this->game = game;
 	this->head = head;
 	this->parent = parent;
-	SpriteComponent* sprite = new SpriteComponent(this);
+	sprite = new SpriteComponent(this);
 	sprite->SetTexture(game->GetTexture("Graphics/body_horizontal.png"));
 
 }
