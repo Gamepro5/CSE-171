@@ -15,6 +15,7 @@
 #include "Snake.h"
 #include <vector>
 #include "BGSpriteComponent.h"
+#include "Apple.h"
 
 Game::Game()
 :mWindow(nullptr)
@@ -185,8 +186,16 @@ void Game::LoadData()
 
 	// Create player's snek
 	mSnake = new Snake(this);
+	grid[0][0] = 1; //1 means there is a snake in that spot.
 	mSnake->setTilePos(0, 0);
 	mSnake->SetScale(1.0f);
+
+
+	// Create an apple (temporary!)
+	Apple* apple = new Apple(this);
+	grid[5][5] = 2; //2 means there is an apple in this slot.
+	apple->setTilePos(5, 5);
+	apple->SetScale(1.0f);
 
 	// Create actor for the background (this doesn't need a subclass)
 	Actor* temp = new Actor(this);

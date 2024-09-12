@@ -49,6 +49,28 @@ void Actor::UpdateComponents(float deltaTime)
 	}
 }
 
+
+bool Actor::setTilePos(int x, int y) {
+	if (x > 16 || y > 16 || x < 0 || y < 0) {
+		return false;
+	}
+	xTilePos = x;
+	yTilePos = y;
+
+	float rx = (mGame->resolution.x);
+	float ry = (mGame->resolution.y);
+	float s = 17;
+	SetPosition(
+		Vector2(
+			((rx * x) / s) + ((rx / s) / 2)
+			,
+			((ry * y) / s) + ((ry / s) / 2)
+
+		)
+	);
+	return true;
+}
+
 void Actor::UpdateActor(float deltaTime)
 {
 }

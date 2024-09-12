@@ -14,48 +14,68 @@ Snake::Snake(Game* game)
 	sprite = new SpriteComponent(this);
 	sprite->SetTexture(game->GetTexture("Graphics/head_up.png"));
 	deltaTimeCounter = 0;
+	child = nullptr;
+	visDir = 'u';
 
 }
 
-void Snake::setTilePos(int x, int y) {
-	if (x > 17 || y > 17 || x < 0 || y < 0)  {
-		return;
-	}
-	xTilePos = x;
-	yTilePos = y;
-	game->grid[x][y] = 1;
-	
-	float top_left_x = ((game->resolution.x) * x) / (17); // top left x
-	float bottom_left_x = ((game->resolution.x) * x+1) / (17); // bottom left x;
-	float top_left_y = ((game->resolution.y) * y) / (17); // top left y
-	float bottom_left_y = ((game->resolution.y) * y+1) / (17); // bottom left y
-	SetPosition(Vector2(top_left_x/2+(bottom_left_x - top_left_x / 2), top_left_y/2 + (bottom_left_y - top_left_y / 2)));
+SnakeSegment* Snake::createSegment(int posX, int posY, SnakeSegment* child, char visDir) {
+	SnakeSegment* segment = new SnakeSegment(game, self, nullptr, child, visDir);
+	segment->setTilePos(xTilePos, yTilePos);
+	segment->SetScale(1.0f);
+	return segment;
 }
 
 void Snake::moveSnake(bool grow) {
-	
-	std::cout << xTilePos << "  " << yTilePos << std::endl;
-	if (grow) {
-		//SnakeSegment* segment = new SnakeSegment(game, self, nullptr);
-		//segment->setTilePos();
-		//segment->SetScale(1.0f);
-	}
-	else {
-		if (direction.x == 1.0 && direction.y == 0.0) {
-			sprite->SetTexture(game->GetTexture("Graphics/head_right.png"));
-			setTilePos(xTilePos+1, yTilePos);
-		} else if (direction.x == 0.0 && direction.y == 1.0) {
-			sprite->SetTexture(game->GetTexture("Graphics/head_up.png"));
-			setTilePos(xTilePos, yTilePos-1);
-		} else if (direction.x == -1.0 && direction.y == 0.0) {
-			sprite->SetTexture(game->GetTexture("Graphics/head_left.png"));
-			setTilePos(xTilePos-1, yTilePos);
-		} else if (direction.x == 0.0 && direction.y == -1.0) {
-			sprite->SetTexture(game->GetTexture("Graphics/head_down.png"));
-			setTilePos(xTilePos, yTilePos+1);
-		}
+	int targetPosX = 0;
+	int targetPosY = 0;
+	//std::cout << game->grid[xTilePos][yTilePos] << std::endl;
+	char previousVisDir = this->visDir;
 
+	if (direction.x == 1.0 && direction.y == 0.0) {
+		sprite->SetTexture(game->GetTexture("Graphics/head_right.png"));
+		targetPosX = xTilePos + 1;
+		targetPosY = yTilePos;
+		visDir = 'r';
+	} else if (direction.x == 0.0 && direction.y == 1.0) {
+		sprite->SetTexture(game->GetTexture("Graphics/head_up.png"));
+		targetPosX = xTilePos;
+		targetPosY = yTilePos - 1;
+		visDir = 'u';
+	} else if (direction.x == -1.0 && direction.y == 0.0) {
+		sprite->SetTexture(game->GetTexture("Graphics/head_left.png"));
+		targetPosX = xTilePos - 1;
+		targetPosY = yTilePos;
+		visDir = 'l';
+	} else if (direction.x == 0.0 && direction.y == -1.0) {
+		sprite->SetTexture(game->GetTexture("Graphics/head_down.png"));
+		targetPosX = xTilePos;
+		targetPosY = yTilePos + 1;	
+		visDir = 'd';
 	}
+	if (game->grid[xTilePos][yTilePos] == 2) {
+		child = createSegment(xTilePos, yTilePos, child, visDir);
+		game->AddActor(child);
+		child->propogateMovement(xTilePos, yTilePos, visDir, true);
+	}
+	else {//snake not elongated
+		if (child != nullptr) {
+			child->propogateMovement(xTilePos, yTilePos, visDir, false);
+		}
+	}
+	
+	if (game->grid[xTilePos][yTilePos] == 0) {
+		game->grid[xTilePos][yTilePos] = 1;
+	}
+	
+	std::cout << visDir << ", ";
+	SnakeSegment* iter = child;
+	while (iter != nullptr) {
+		std::cout << iter->visDir << ", ";
+		iter = iter->child;
+	}
+	std::cout << std::endl;
+	setTilePos(targetPosX, targetPosY);
 }
 
 

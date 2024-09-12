@@ -22,6 +22,9 @@ public:
 	Actor(class Game* game);
 	virtual ~Actor();
 
+	int xTilePos;
+	int yTilePos;
+	bool setTilePos(int x, int y);
 	// Update function called from Game (not overridable)
 	void Update(float deltaTime);
 	// Updates all the components attached to the actor (not overridable)

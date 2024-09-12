@@ -8,13 +8,14 @@
 class SnakeSegment : public Actor
 {
 public:
-	SnakeSegment(class Game* game, class Snake* head, class SnakeSegment* parent);
+	SnakeSegment(class Game* game, class Snake* head, class SnakeSegment* parent, class SnakeSegment* child, char visDir);
 	Game* game;
 	Snake* head;
+	SnakeSegment* self;
 	SnakeSegment* parent;
-	int xTilePos;
-	int yTilePos;
-	void setTilePos(int x, int y);
 	void UpdateActor(float deltaTime) override;
 	SpriteComponent* sprite;
+	SnakeSegment* child;
+	void propogateMovement(int posX, int posY, char visDir, bool newChild);
+	char visDir;
 };

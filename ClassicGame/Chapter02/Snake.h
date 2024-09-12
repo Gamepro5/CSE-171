@@ -15,9 +15,10 @@ public:
 	void UpdateActor(float deltaTime) override;
 	void ProcessKeyboard(const uint8_t* state);
 	Vector2 direction;
-	int xTilePos;
-	int yTilePos;
-	void setTilePos(int x, int y);
+	class SnakeSegment* child;
 	void moveSnake(bool grow);
 	std::vector<class SnakeSegment*> segments;
+	char visDir;
+private:
+	SnakeSegment* createSegment(int posX, int posY, class SnakeSegment* child, char visDir);
 };
