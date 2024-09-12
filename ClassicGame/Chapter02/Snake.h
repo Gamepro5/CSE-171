@@ -19,6 +19,8 @@ public:
 	void moveSnake(bool grow);
 	std::vector<class SnakeSegment*> segments;
 	char visDir;
+	class Apple* currentApple;
+	class Ship* currentShip;
 private:
 	SnakeSegment* createSegment(int posX, int posY, class SnakeSegment* child, char visDir);
 };

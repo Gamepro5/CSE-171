@@ -3,6 +3,9 @@
 #include "AnimSpriteComponent.h"
 #include "Game.h"
 #include <iostream>
+#include <random>
+#include "Apple.h"
+#include "Ship.h"
 
 Snake::Snake(Game* game)
 	:Actor(game)
@@ -27,9 +30,62 @@ SnakeSegment* Snake::createSegment(int posX, int posY, SnakeSegment* child, char
 }
 
 void Snake::moveSnake(bool grow) {
+
+	if (currentApple == nullptr) {
+		//Create apples
+		std::random_device dev;
+		std::mt19937 rng(dev());
+		std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 16); // distribution in range [1, 6]
+
+		bool ok = false;
+		while (!ok) {
+			int proposedX = dist6(rng);
+			int proposedY = dist6(rng);
+			if (game->grid[proposedX][proposedY] == 0) {
+				// Create an apple (temporary!)
+				Apple* apple = new Apple(game);
+				game->grid[proposedX][proposedY] = 2; //2 means there is an apple in this slot.
+				apple->setTilePos(proposedX, proposedY);
+				apple->SetScale(1.0f);
+				game->AddActor(apple);
+				currentApple = apple;
+				ok = true;
+			}
+		}
+	}
+	
+		//Create bombs
+		std::random_device dev;
+		std::mt19937 rng(dev());
+		std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 16); // distribution in range [1, 6]
+
+		bool ok = false;
+		while (!ok) {
+			int proposedX = dist6(rng);
+			int proposedY = dist6(rng);
+			if (game->grid[proposedX][proposedY] == 0) {
+				// Create an apple (temporary!)
+				Ship* ship = new Ship(game);
+				game->grid[proposedX][proposedY] = 3; //2 means there is an apple in this slot.
+				ship->setTilePos(proposedX, proposedY);
+				ship->SetScale(1.0f);
+				game->AddActor(ship);
+				ok = true;
+			}
+		}
+	
+	
+
+
+
+
+
+
+
+
 	int targetPosX = 0;
 	int targetPosY = 0;
-	//std::cout << game->grid[xTilePos][yTilePos] << std::endl;
+	
 	char previousVisDir = this->visDir;
 
 	if (direction.x == 1.0 && direction.y == 0.0) {
@@ -56,6 +112,9 @@ void Snake::moveSnake(bool grow) {
 	if (game->grid[xTilePos][yTilePos] == 2) {
 		child = createSegment(xTilePos, yTilePos, child, visDir);
 		game->AddActor(child);
+		game->grid[xTilePos][yTilePos] = 0;
+		delete currentApple;
+		currentApple = nullptr;
 		child->propogateMovement(xTilePos, yTilePos, visDir, true);
 	}
 	else {//snake not elongated
@@ -63,18 +122,48 @@ void Snake::moveSnake(bool grow) {
 			child->propogateMovement(xTilePos, yTilePos, visDir, false);
 		}
 	}
-	
-	if (game->grid[xTilePos][yTilePos] == 0) {
-		game->grid[xTilePos][yTilePos] = 1;
+
+	std::cout << game->grid[targetPosX][targetPosY] << std::endl;
+	if (game->grid[targetPosX][targetPosY] == 1 || game->grid[targetPosX][targetPosY] == 3) {
+		game->Shutdown();
+		return;
 	}
 	
-	std::cout << visDir << ", ";
+	for (int i = 0; i < 17; i++) {
+		for (int j = 0; j < 17; j++) {
+			if (game->grid[i][j] == 1) {
+				game->grid[i][j] = 0;
+			}
+		}
+
+	}
 	SnakeSegment* iter = child;
+	/*
+	std::cout << visDir << ", ";
 	while (iter != nullptr) {
 		std::cout << iter->visDir << ", ";
 		iter = iter->child;
 	}
 	std::cout << std::endl;
+	*/
+	
+	for (int i = 0; i < 17; i++) {
+		for (int j = 0; j < 17; j++) {
+			if (game->grid[i][j] == 1) {
+				game->grid[i][j] = 0;
+			}
+		}
+	}
+	iter = child;
+	if (game->grid[xTilePos][yTilePos] == 0) {
+		game->grid[xTilePos][yTilePos] = 1;
+	}
+	while (iter != nullptr) {
+		if (game->grid[iter->xTilePos][iter->yTilePos] == 0) {
+			game->grid[iter->xTilePos][iter->yTilePos] = 1;
+		}
+		iter = iter->child;
+	}
 	setTilePos(targetPosX, targetPosY);
 }
 

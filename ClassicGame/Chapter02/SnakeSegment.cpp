@@ -104,9 +104,7 @@ void SnakeSegment::propogateMovement(int posX, int posY, char visDir, bool newCh
 	}
 
 	if (!newChild) {
-		if (game->grid[posX][posX] == 0) {
-			game->grid[posX][posX] = 1;
-		}
+		
 		setTilePos(posX, posY);
 	}
 }
