@@ -1,4 +1,5 @@
 ﻿  Snake.cpp
+C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Snake.cpp(246,21): warning C4018: '<': signed/unsigned mismatch
   Game.vcxproj -> C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\Debug\Game.exe
   C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\\..\external\SDL\lib\win\x86\libfreetype-6.dll
   C:\Users\gamep\Documents\GitHub\CSE-171\ClassicGame\Chapter02\\..\external\SDL\lib\win\x86\libogg-0.dll

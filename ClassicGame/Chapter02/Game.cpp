@@ -119,7 +119,7 @@ void Game::UpdateGame()
 	// Update all actors
 	mUpdatingActors = true;
 	for (auto actor : mActors)
-	{
+	{	
 		actor->Update(deltaTime);
 	}
 	mUpdatingActors = false;
@@ -271,6 +271,8 @@ SDL_Texture* Game::GetTexture(const std::string& fileName)
 
 void Game::Shutdown()
 {
+	SDL_Quit();
+	return;
 	UnloadData();
 	IMG_Quit();
 	SDL_DestroyRenderer(mRenderer);

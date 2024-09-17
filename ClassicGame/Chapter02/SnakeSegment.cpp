@@ -3,7 +3,7 @@
 #include "AnimSpriteComponent.h"
 #include "Game.h"
 #include <iostream>
-SnakeSegment::SnakeSegment(Game* game, Snake* head, SnakeSegment* parent, SnakeSegment* child, char visDir)
+SnakeSegment::SnakeSegment(Game* game, Snake* head, SnakeSegment* parent, SnakeSegment* child, char visDir, char prevVisDir)
 	:Actor(game)
 {
 	// Create an animated sprite component
@@ -14,13 +14,16 @@ SnakeSegment::SnakeSegment(Game* game, Snake* head, SnakeSegment* parent, SnakeS
 	this->self = this;
 	sprite = new SpriteComponent(this);
 	this->visDir = visDir;
+	this->prevVisDir = prevVisDir;
+	
 }
 
-void SnakeSegment::propogateMovement(int posX, int posY, char visDir, bool newChild) {
+void SnakeSegment::propogateMovement(int posX, int posY, char visDir, char prevVisDir, bool newChild) {
 	char previousVisDir = this->visDir;
 	this->visDir = visDir;
-
+	
 	if (child == nullptr) {
+		/*
 		switch (visDir) {
 			case 'u':
 				sprite->SetTexture(game->GetTexture("Graphics/tail_down.png"));
@@ -34,13 +37,13 @@ void SnakeSegment::propogateMovement(int posX, int posY, char visDir, bool newCh
 			case 'd':
 				sprite->SetTexture(game->GetTexture("Graphics/tail_up.png"));
 				break;
-		}
+		}*/
 		
 	}
-	else {
-		switch (visDir) {
+	else {/*
+		switch (prevVisDir) {
 		case 'u':
-			switch (child->visDir) {
+			switch (child->prevVisDir) {
 			case 'u':
 				sprite->SetTexture(game->GetTexture("Graphics/body_vertical.png"));
 				break;
@@ -55,7 +58,7 @@ void SnakeSegment::propogateMovement(int posX, int posY, char visDir, bool newCh
 				break;
 			}
 		case 'r':
-			switch (child->visDir) {
+			switch (child->prevVisDir) {
 			case 'u':
 				sprite->SetTexture(game->GetTexture("Graphics/body_bottomright.png"));
 				break;
@@ -70,7 +73,7 @@ void SnakeSegment::propogateMovement(int posX, int posY, char visDir, bool newCh
 				break;
 			}
 		case 'l':
-			switch (child->visDir) {
+			switch (child->prevVisDir) {
 			case 'u':
 				sprite->SetTexture(game->GetTexture("Graphics/body_bottomleft.png"));
 				break;
@@ -85,7 +88,7 @@ void SnakeSegment::propogateMovement(int posX, int posY, char visDir, bool newCh
 				break;
 			}
 		case 'd':
-			switch (child->visDir) {
+			switch (child->prevVisDir) {
 			case 'u':
 				sprite->SetTexture(game->GetTexture("Graphics/body_vertical.png"));
 				break;
@@ -99,8 +102,8 @@ void SnakeSegment::propogateMovement(int posX, int posY, char visDir, bool newCh
 				sprite->SetTexture(game->GetTexture("Graphics/body_vertical.png"));
 				break;
 			}
-		}
-		child->propogateMovement(xTilePos, yTilePos, previousVisDir, newChild);
+		}*/
+		child->propogateMovement(xTilePos, yTilePos, previousVisDir, prevVisDir, newChild);
 	}
 
 	if (!newChild) {
