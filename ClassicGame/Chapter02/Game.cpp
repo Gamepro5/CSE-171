@@ -11,7 +11,7 @@
 #include <algorithm>
 #include "Actor.h"
 #include "SpriteComponent.h"
-#include "Ship.h"
+#include "Bomb.h"
 #include "Snake.h"
 #include <vector>
 #include "BGSpriteComponent.h"

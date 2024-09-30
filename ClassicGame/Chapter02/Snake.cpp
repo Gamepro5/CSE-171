@@ -5,7 +5,7 @@
 #include <iostream>
 #include <random>
 #include "Apple.h"
-#include "Ship.h"
+#include "Bomb.h"
 
 Snake::Snake(Game* game)
 	:Actor(game)
@@ -277,7 +277,12 @@ void Snake::moveSnake(bool grow) {
 		}
 		iter = iter->child;
 	}
-	setTilePos(targetPosX, targetPosY);
+	bool success = setTilePos(targetPosX, targetPosY);
+	if (!success) {
+		std::cout << "DEAD!" << std::endl;
+		game->Shutdown();
+		return;
+	}
 }
 
 
@@ -316,11 +321,11 @@ void Snake::UpdateActor(float deltaTime)
 			int proposedY = dist6(rng);
 			if (game->grid[proposedX][proposedY] == 0) {
 				// Create an apple (temporary!)
-				Ship* ship = new Ship(game);
-				game->grid[proposedX][proposedY] = 3; //2 means there is an apple in this slot.
-				ship->setTilePos(proposedX, proposedY);
-				ship->SetScale(1.0f);
-				game->AddActor(ship);
+				Bomb* bomb = new Bomb(game);
+				game->grid[proposedX][proposedY] = 3; //3 means there is an bomb in this slot.
+				bomb->setTilePos(proposedX, proposedY);
+				bomb->SetScale(1.0f);
+				game->AddActor(bomb);
 				ok = true;
 			}
 		}

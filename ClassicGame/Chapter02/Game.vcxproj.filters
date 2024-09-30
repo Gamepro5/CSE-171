@@ -28,7 +28,7 @@
     <ClCompile Include="AnimSpriteComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ship.cpp">
+    <ClCompile Include="Bomb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BGSpriteComponent.cpp">
@@ -63,7 +63,7 @@
     <ClInclude Include="AnimSpriteComponent.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ship.h">
+    <ClInclude Include="Bomb.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="BGSpriteComponent.h">
